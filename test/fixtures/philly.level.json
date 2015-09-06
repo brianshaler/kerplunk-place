@@ -1,0 +1,14 @@
+{
+  "cityId": "4560349",
+  "name": "Philadelphia",
+  "asciiName": "Philadelphia",
+  "timezone": "America/New_York",
+  "population": 1526006,
+  "countryCode": "US",
+  "country": "United States",
+  "location": [
+    -75.16379,
+    39.95234
+  ],
+  "region": "PA"
+}

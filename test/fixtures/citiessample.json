@@ -1,0 +1,170 @@
+[
+  {
+    "cityId": "3039154",
+    "name": "El Tarter",
+    "asciiName": "El Tarter",
+    "timezone": "Europe/Andorra",
+    "population": 1052,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.65362,
+      42.57952
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3039163",
+    "name": "Sant Julià de Lòria",
+    "asciiName": "Sant Julia de Loria",
+    "timezone": "Europe/Andorra",
+    "population": 8022,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.49129,
+      42.46372
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3039604",
+    "name": "Pas de la Casa",
+    "asciiName": "Pas de la Casa",
+    "timezone": "Europe/Andorra",
+    "population": 2363,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.73361,
+      42.54277
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3039678",
+    "name": "Ordino",
+    "asciiName": "Ordino",
+    "timezone": "Europe/Andorra",
+    "population": 3066,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.53319,
+      42.55623
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3040051",
+    "name": "les Escaldes",
+    "asciiName": "les Escaldes",
+    "timezone": "Europe/Andorra",
+    "population": 15853,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.53414,
+      42.50729
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3040132",
+    "name": "la Massana",
+    "asciiName": "la Massana",
+    "timezone": "Europe/Andorra",
+    "population": 7211,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.51483,
+      42.54499
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3040686",
+    "name": "Encamp",
+    "asciiName": "Encamp",
+    "timezone": "Europe/Andorra",
+    "population": 11223,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.58014,
+      42.53474
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3041204",
+    "name": "Canillo",
+    "asciiName": "Canillo",
+    "timezone": "Europe/Andorra",
+    "population": 3292,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.59756,
+      42.5676
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3041519",
+    "name": "Arinsal",
+    "asciiName": "Arinsal",
+    "timezone": "Europe/Andorra",
+    "population": 1419,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.48453,
+      42.57205
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "3041563",
+    "name": "Andorra la Vella",
+    "asciiName": "Andorra la Vella",
+    "timezone": "Europe/Andorra",
+    "population": 20430,
+    "countryCode": "AD",
+    "country": "Andorra",
+    "location": [
+      1.52109,
+      42.50779
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "292223",
+    "name": "Dubai",
+    "asciiName": "Dubai",
+    "timezone": "Asia/Dubai",
+    "population": 1137347,
+    "countryCode": "AE",
+    "country": "United Arab Emirates",
+    "location": [
+      55.30472,
+      25.25817
+    ],
+    "region": ""
+  },
+  {
+    "cityId": "4560349",
+    "name": "Philadelphia",
+    "asciiName": "Philadelphia",
+    "timezone": "America/New_York",
+    "population": 1526006,
+    "countryCode": "US",
+    "country": "United States",
+    "location": [
+      -75.16379,
+      39.95234
+    ],
+    "region": "PA"
+  }
+]
