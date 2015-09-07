@@ -67,10 +67,6 @@ module.exports = (System) ->
       '/admin/place/cityid/:cityId': 'getByCityId'
       '/admin/place/placeguid/:guid': 'getPlaceByCityId'
 
-  methods:
-    createReadStream: (opt) ->
-      db.createReadStream opt
-
   handlers:
     saveCityById: saveCityById
     getByCityId: getByCityId
@@ -78,6 +74,8 @@ module.exports = (System) ->
 
   methods:
     db: -> db
+    createReadStream: (opt) ->
+      db.createReadStream opt
     transforms: -> PlaceTransforms
     saveLevelCityToMongo: saveLevelCityToMongo
 
