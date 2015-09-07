@@ -1,3 +1,4 @@
+_ = require 'lodash'
 Promise = require 'when'
 es = require 'event-stream'
 
@@ -80,25 +81,58 @@ module.exports = (System) ->
     saveLevelCityToMongo: saveLevelCityToMongo
 
   init: (next) ->
-    System.getSettings (err, settings) ->
-      return next err if err
-      citiesSetup = settings?.citiesSetup == true
-      countriesSetup = settings?.countriesSetup == true
+    next() # let init continue immediately..
 
-      return next() if citiesSetup and countriesSetup
-      console.log "not set up #{citiesSetup}, #{countriesSetup}"
-      console.log settings
+    statusFromLevel = ->
+      Promise.promise (resolve, reject) ->
+        db.get 'citiesSetup', (err, item) ->
+          return reject err if err and err.type != 'NotFoundError' and err.status != 404
+          resolve item?.status == true
+
+    statusFromMongo = ->
+      Promise.promise (resolve, reject) ->
+        System.getSettings (err, settings) ->
+          return reject err if err
+          citiesSetup = settings?.citiesSetup == true
+          countriesSetup = settings?.countriesSetup == true
+          resolve citiesSetup and countriesSetup
+
+    saveStatusToLevel = (data) ->
+      Promise.promise (resolve, reject) ->
+        db.put 'citiesSetup', data, (err, item) ->
+          return reject err if err
+          resolve()
+
+    saveStatusToMongo = (newSettings) ->
+      Promise.promise (resolve, reject) ->
+        System.getSettings (err, settings) ->
+          settings = _.merge settings, newSettings
+          System.updateSettings settings, (err) ->
+            return reject err if err
+            resolve()
+
+    Promise.all [
+      statusFromLevel()
+      statusFromMongo()
+    ]
+    .then (status) ->
+      return 'already set up' if status[0] == true and status[1] == true
+      # console.log "not set up #{citiesSetup}, #{countriesSetup}"
+      # console.log settings
 
       Setup.countries Place
       .then Setup.cities db, Place
-      .done (result) ->
+      .then (result) ->
         console.log 'result', result
-        settings.citiesSetup = true
-        settings.countriesSetup = true
-        System.updateSettings settings, (err) ->
-          return next err if err
-          next err
-      , (err) ->
-        console.log 'error', err
-        console.error err.stack
-        next err
+        newSettings =
+          citiesSetup: true
+          countriesSetup: true
+        Promise.all [
+          saveStatusToLevel {status: true}
+          saveStatusToMongo newSettings
+        ]
+      .then -> 'set up'
+    .done (status) ->
+      console.log 'kerplunk-place status', status
+    , (err) ->
+      console.log 'kerplunk-place error', err?.stack ? err
