@@ -8,30 +8,23 @@ cityStreamToLevel = require './cityStreamToLevel'
 cityStreamToMongo = require './cityStreamToMongo'
 
 mongoCount = (Model, where = {}) ->
-  deferred = Promise.defer()
-  Model.count where, (err, count) ->
-    return deferred.reject err if err
-    deferred.resolve count
-  deferred.promise
+  Promise Model.where(where).count()
 
 levelCount = (db, key = 'cities', start = 'cityid:', end = 'cityid;') ->
-  deferred = Promise.defer()
-
-  db.get key, (err, record) ->
-    if record
-      return deferred.resolve record.count
-    count = 0
-    opt =
-      start: start
-      end: end
-    db.createKeyStream opt
-    .on 'data', -> count++
-    .on 'error', (err) -> deferred.reject err
-    .on 'end', ->
-      db.put key, {count: count}
-      deferred.resolve count
-
-  deferred.promise
+  Promise.promise (resolve, reject) ->
+    db.get key, (err, record) ->
+      if record
+        return resolve record.count
+      count = 0
+      opt =
+        start: start
+        end: end
+      db.createKeyStream opt
+      .on 'data', -> count++
+      .on 'error', (err) -> reject err
+      .on 'end', ->
+        db.put key, {count: count}
+        resolve count
 
 module.exports = (db, Place) ->
   (countryPlaces) ->

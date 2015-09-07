@@ -11,16 +11,14 @@ countryCodes = _ countries
   .value()
 
 getCountries = (Place) ->
-  deferred = Promise.defer()
-  Place.find
+  mpromise = Place
+  .where
     'data.countryCode':
       '$exists': true
     'data.cityId':
       '$exists': false
-  , (err, countryPlaces) ->
-    return deferred.reject err if err
-    deferred.resolve countryPlaces
-  deferred.promise
+  .find()
+  Promise mpromise
 
 module.exports = (Place, expectedCount = -1) ->
   getCountries Place
@@ -45,12 +43,10 @@ module.exports = (Place, expectedCount = -1) ->
     if docs.length == 0
       return countryPlaces
 
-    deferred = Promise.defer()
-    Place.collection.insert docs, {}, (err) ->
-      console.log err if err
-      return deferred.reject err if err
-      deferred.resolve()
-
-    deferred.promise
+    Promise.promise (resolve, reject) ->
+      Place.collection.insert docs, {}, (err) ->
+        console.log err if err
+        return reject err if err
+        resolve()
     .then ->
       getCountries Place
