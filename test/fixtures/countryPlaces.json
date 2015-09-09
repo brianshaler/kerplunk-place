@@ -1,0 +1,10 @@
+{
+  "US": {
+    "guid": "country-#{countryCode}",
+    "name": "United States",
+    "country": "United States",
+    "specificity": 1,
+    "location": [0, 0],
+    "data": {}
+  }
+}
