@@ -17,6 +17,7 @@ getCountries = (Place) ->
       '$exists': true
     'data.cityId':
       '$exists': false
+    specificity: 1
   .find()
   Promise mpromise
 
