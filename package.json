@@ -13,11 +13,11 @@
   },
   "main": "./lib/index.js",
   "dependencies": {
-    "cities1000": "0.0.0",
-    "country-data": "0.0.19",
+    "cities1000": "^0.0.0",
+    "country-data": "^0.0.19",
     "csv-stream": "^0.1.3",
     "event-stream": "^3.3.1",
-    "level-ws": "0.0.0",
+    "level-ws": "^0.0.0",
     "leveldown": "^1.3.0",
     "levelup": "^1.2.1",
     "lodash": "^3.7.0",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "coffee-script": "^1.9.1",
-    "glut": "0.0.1",
+    "glut": "^0.0.1",
     "gulp": "^3.8.8",
     "gulp-coffee": "^2.3.1",
     "mocha": "^2.3.2",
@@ -34,6 +34,6 @@
   },
   "scripts": {
     "prepublish": "rm -rf ./lib ./public && gulp",
-    "test": "NODE_ENV=test mocha test/*.coffee test/*/*.coffee test/*/*/*.coffee --require coffee-script/register --reporter spec"
+    "test": "NODE_ENV=test mocha"
   }
 }
