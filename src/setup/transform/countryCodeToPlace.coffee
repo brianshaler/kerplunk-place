@@ -10,22 +10,6 @@ module.exports = (countryCode) ->
   return null if country.longitude == '' or country.latitude == ''
   return null unless country.latlng?.length == 2
 
-  ###
-  # parsing iso-countries
-  # longitude = country.longitude
-  #   .replace /^[^\d]+/, ''
-  #   .replace /[^\d]+$/, ''
-  #   .replace ' ', '.'
-  # longitude = parseFloat longitude
-  # longitude *= -1 if /w$/i.test country.longitude
-  # latitude = country.latitude
-  #   .replace /^[^\d]+/, ''
-  #   .replace /[^\d]+$/, ''
-  #   .replace ' ', '.'
-  # latitude = parseFloat latitude
-  # latitude *= -1 if /s$/i.test country.latitude
-  ###
-
   [latitude, longitude] = country.latlng
 
   guid: "country-#{countryCode}"

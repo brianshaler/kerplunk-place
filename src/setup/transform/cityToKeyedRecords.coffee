@@ -9,7 +9,6 @@ module.exports = ->
     unless key? and key.length > 0
       key = city.name
 
-    # add uniqueness to the end
     val = cityToLevel city
 
     @emit 'data',
@@ -17,12 +16,13 @@ module.exports = ->
       value: val
 
     quad = quadtree city.location, 12
-    
+
     @emit 'data',
-      key: "ll:#{quad}"
+      key: "ll:#{quad}#{city.cityId}"
       value: "cityid:#{city.cityId}"
 
     if key and key.length > 0
+      # add uniqueness to the end
       key = key.toLowerCase() + city.cityId
       @emit 'data',
         key: key
