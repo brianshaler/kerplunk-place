@@ -1,4 +1,5 @@
 {
+  "guid": "cityid:4560349",
   "cityId": "4560349",
   "name": "Philadelphia",
   "asciiName": "Philadelphia",
@@ -10,5 +11,6 @@
     -75.16379,
     39.95234
   ],
-  "region": "PA"
+  "region": "PA",
+  "countryId": "ObjectId(_id)"
 }
