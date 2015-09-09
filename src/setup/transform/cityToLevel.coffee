@@ -1,5 +1,6 @@
 module.exports = (obj) ->
   [
+    obj.cityId
     obj.name
     obj.region
     obj.country
