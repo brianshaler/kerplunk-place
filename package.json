@@ -40,5 +40,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/brianshaler/kerplunk-place.git"
-  }
+  },
+  "license": "MIT"
 }
