@@ -18,7 +18,59 @@ module.exports = (System) ->
 
   #setupCities = Setup.cities System, db
   #setupCountries = Setup.countries System
+  postInit = ->
+    statusFromLevel = ->
+      Promise.promise (resolve, reject) ->
+        db.get 'citiesSetup', (err, item) ->
+          return reject err if err and err.type != 'NotFoundError' and err.status != 404
+          resolve item?.status == true
 
+    statusFromMongo = ->
+      Promise.promise (resolve, reject) ->
+        System.getSettings (err, settings) ->
+          return reject err if err
+          citiesSetup = settings?.citiesSetup == true
+          countriesSetup = settings?.countriesSetup == true
+          resolve citiesSetup and countriesSetup
+
+    saveStatusToLevel = (data) ->
+      Promise.promise (resolve, reject) ->
+        db.put 'citiesSetup', data, (err, item) ->
+          return reject err if err
+          resolve()
+
+    saveStatusToMongo = (newSettings) ->
+      Promise.promise (resolve, reject) ->
+        System.getSettings (err, settings) ->
+          settings = _.merge settings, newSettings
+          System.updateSettings settings, (err) ->
+            return reject err if err
+            resolve()
+
+    Promise.all [
+      statusFromLevel()
+      statusFromMongo()
+    ]
+    .then (status) ->
+      return 'already set up' if status[0] == true and status[1] == true
+      # console.log "not set up #{citiesSetup}, #{countriesSetup}"
+      # console.log settings
+
+      Setup.countries Place
+      .then Setup.cities db, Place
+      .then (result) ->
+        console.log 'result', result
+        newSettings =
+          citiesSetup: true
+          countriesSetup: true
+        Promise.all [
+          saveStatusToLevel {status: true}
+          saveStatusToMongo newSettings
+        ]
+      .then -> 'set up'
+    .then (status) ->
+      console.log 'kerplunk-place status', status
+    
   saveLevelCityToMongo = (cityId, next) ->
     Place.findOne
       guid: "city-#{cityId}"
@@ -80,59 +132,6 @@ module.exports = (System) ->
     transforms: -> PlaceTransforms
     saveLevelCityToMongo: saveLevelCityToMongo
 
-  init: (next) ->
-    next() # let init continue immediately..
-
-    statusFromLevel = ->
-      Promise.promise (resolve, reject) ->
-        db.get 'citiesSetup', (err, item) ->
-          return reject err if err and err.type != 'NotFoundError' and err.status != 404
-          resolve item?.status == true
-
-    statusFromMongo = ->
-      Promise.promise (resolve, reject) ->
-        System.getSettings (err, settings) ->
-          return reject err if err
-          citiesSetup = settings?.citiesSetup == true
-          countriesSetup = settings?.countriesSetup == true
-          resolve citiesSetup and countriesSetup
-
-    saveStatusToLevel = (data) ->
-      Promise.promise (resolve, reject) ->
-        db.put 'citiesSetup', data, (err, item) ->
-          return reject err if err
-          resolve()
-
-    saveStatusToMongo = (newSettings) ->
-      Promise.promise (resolve, reject) ->
-        System.getSettings (err, settings) ->
-          settings = _.merge settings, newSettings
-          System.updateSettings settings, (err) ->
-            return reject err if err
-            resolve()
-
-    Promise.all [
-      statusFromLevel()
-      statusFromMongo()
-    ]
-    .then (status) ->
-      return 'already set up' if status[0] == true and status[1] == true
-      # console.log "not set up #{citiesSetup}, #{countriesSetup}"
-      # console.log settings
-
-      Setup.countries Place
-      .then Setup.cities db, Place
-      .then (result) ->
-        console.log 'result', result
-        newSettings =
-          citiesSetup: true
-          countriesSetup: true
-        Promise.all [
-          saveStatusToLevel {status: true}
-          saveStatusToMongo newSettings
-        ]
-      .then -> 'set up'
-    .done (status) ->
-      console.log 'kerplunk-place status', status
-    , (err) ->
-      console.log 'kerplunk-place error', err?.stack ? err
+  events:
+    init:
+      post: postInit
