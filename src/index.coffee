@@ -70,7 +70,7 @@ module.exports = (System) ->
       .then -> 'set up'
     .then (status) ->
       console.log 'kerplunk-place status', status
-    
+
   saveLevelCityToMongo = (cityId, next) ->
     Place.findOne
       guid: "city-#{cityId}"

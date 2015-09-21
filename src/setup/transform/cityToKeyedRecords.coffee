@@ -5,9 +5,9 @@ quadtree = require '../../quadtree'
 
 module.exports = ->
   es.through (city) ->
-    key = city.asciiName
-    unless key? and key.length > 0
-      key = city.name
+    name = city.asciiName
+    unless name? and name.length > 0
+      name = city.name
 
     val = cityToLevel city
 
@@ -21,9 +21,8 @@ module.exports = ->
       key: "ll:#{quad}#{city.cityId}"
       value: "cityid:#{city.cityId}"
 
-    if key and key.length > 0
+    if name and name.length > 0
       # add uniqueness to the end
-      key = key.toLowerCase() + city.cityId
       @emit 'data',
-        key: key
+        key: "nm:#{name.toLowerCase() + city.cityId}"
         value: val
