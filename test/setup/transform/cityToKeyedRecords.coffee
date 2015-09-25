@@ -17,4 +17,4 @@ describe 'setup/transform/cityToKeyedRecords', ->
     results.length.should.equal 3
     results[0].key.should.equal "cityid:#{cityObject.cityId}"
     /^ll:/.test(results[1].key).should.equal true
-    results[2].key.should.equal cityObject.name.toLowerCase() + cityObject.cityId
+    results[2].key.should.equal 'nm:' + cityObject.name.toLowerCase() + cityObject.cityId
